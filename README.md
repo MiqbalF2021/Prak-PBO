@@ -123,8 +123,10 @@ Identifikasi hubungan antar kelas. Dalam OOP, hubungan ini dapat diwujudkan dala
 
 ## 8. Mampu menjelaskan rancangan dalam bentuk Class Diagram, dan Use Case table
 ### Class Diagram
-```mermaid
- class Controller {
+
+
+classDiagram
+class Controller {
         <<abstract>>
         +handleRequest()
     }
@@ -182,7 +184,7 @@ Identifikasi hubungan antar kelas. Dalam OOP, hubungan ini dapat diwujudkan dala
     AuthController *-- User
     QuestController *-- Quest
     AnswerController *-- Answer
-```
+
 
 
 ### UseCase Table
