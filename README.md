@@ -1,5 +1,9 @@
 # Prak-PBO
-## Jawaban Soal UTS
+### Nama   : Muhamad Iqbal Fauzi
+### NIM   : 1217050085
+## Kelas   : Prak PBO D
+
+# Jawaban Soal UTS
 ## 1. Mampu mendemonstrasikan penyelesaian masalah dengan pendekatan matematika dan algoritma pemrograman secara tepat
 Berikut adalah contoh pendekatan matematika dan algoritma pemrograman untuk mengimplementasikan fitur-fitur yang Anda sebutkan pada program website diskusi:
 
@@ -206,3 +210,339 @@ Link Vidio : https://youtu.be/TrvG1pSM2bU
 
 ## 10. Inovasi UX
 
+
+# Jawaban Soal UAS
+## 1. Mampu menunjukkan keseluruhan Use Case beserta ranking dari tiap Use Case dari produk digital
+### UseCase user Table
+| No | UseCase | Prioritas (%) | terimplementasi |
+|---------|---------|---------|---------|
+| 1 | User dapat mengajukan pertanyaan    | 10   | Y |
+| 2 | User dapat menjawab pertanyaan    | 10    | Y |
+| 3 | User dapat mengedit pertanyaanya    | 9    | Y |
+| 4 | User dapat menghapus pertanyaannya    | 9    | Y |
+| 5 | User dapat mengedit jawabannya    | 9    | Y |
+| 6 | User dapat menghapus jawabannya    | 9    | Y |
+| 7 | User dapat login    | 7    | Y |
+| 8 | User dapat logout    | 7   | Y |
+| 9 | dapat menampilkan pertanyaan dan jawaban  | 9    | Y |
+
+## 2. Mampu mendemonstrasikan Class Diagram dari keseluruhan Use Case produk digital
+
+```mermaid
+classDiagram
+   class Controller {
+        <<abstract>>
+        +handleRequest()
+    }
+    
+    class QuestController {
+        -quest: Quest
+        +createQuest()
+        +editQuest()
+        +deleteQuest()
+    }
+    
+    class AnswerController {
+        -answer: Answer
+        +createAnswer()
+        +editAnswer()
+        +deleteAnswer()
+    }
+    
+    class AuthController {
+        -user: User
+        +login()
+        +logout()
+    }
+    
+    class User {
+        -userId: int
+        -username: string
+        -password: string
+        +getUserInfo()
+    }
+    
+    class Answer {
+        -answerId: int
+        -content: string
+        -createdAt: datetime
+        -user: User
+        +editContent()
+        +deleteAnswer()
+    }
+    
+    class Quest {
+        -questId: int
+        -title: string
+        -content: string
+        -createdAt: datetime
+        -user: User
+        +editTitle()
+        +editContent()
+        +deleteQuest()
+    }
+    
+    Controller <|-- QuestController
+    Controller <|-- AnswerController
+    Controller <|-- AuthController
+    AuthController *-- User
+    QuestController *-- Quest
+    AnswerController *-- Answer
+```
+
+## 3. Mampu menunjukkan dan menjelaskan penerapan setiap poin dari SOLID Design Principle
+
+1. Single Responsibility Principle (SRP):
+Prinsip ini menyatakan bahwa setiap kelas atau modul dalam perangkat lunak seharusnya hanya memiliki satu tanggung jawab tunggal.
+contoh implementasi :
+
+```
+class AuthenticationController implements Authenticator
+{
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|string',
+            'password' => 'required|string',
+        ]);  
+
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        return $user->createToken('login user')->plainTextToken;
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+    }
+```
+
+pada source coe diatas class AuthenticationController hanya memiliki tugas untuk authentikasi
+
+2. Open-Closed Principle (OCP):
+Prinsip ini menyatakan bahwa entitas perangkat lunak (kelas, modul, fungsi, dll.) harus terbuka untuk perluasan (open for extension) tetapi tertutup untuk modifikasi (closed for modification).
+
+3. Liskov Substitution Principle (LSP):
+Prinsip ini menyatakan bahwa objek dari kelas turunan harus dapat digunakan sebagai pengganti objek kelas dasarnya tanpa mengubah kebenaran program. Ini berarti kelas turunan harus mematuhi kontrak dan perilaku yang telah ditetapkan oleh kelas dasarnya. Dengan mematuhi prinsip ini, kita dapat menghindari perubahan yang tak terduga dan memastikan bahwa polimorfisme berfungsi dengan benar.
+
+4. Interface Segregation Principle (ISP):
+Prinsip ini menyatakan bahwa klien tidak boleh dipaksa bergantung pada antarmuka yang tidak mereka gunakan. Sebaliknya, perangkat lunak harus menyediakan antarmuka yang spesifik dan terpisah untuk setiap klien yang menggunakan fungsionalitas tertentu.
+
+5. Dependency Inversion Principle (DIP):
+Prinsip ini menyatakan bahwa modul tingkat tinggi tidak boleh bergantung pada modul tingkat rendah secara langsung, tetapi keduanya harus bergantung pada abstraksi.
+
+## 4. Mampu menunjukkan dan menjelaskan Design Pattern yang dipilih
+Saya memakan Singleton design sebagai implementasi design pattern pada code program saya, Singleton adalah pola desain (design pattern) yang digunakan untuk memastikan bahwa hanya ada satu instansi (instance) dari sebuah kelas yang dapat dibuat dalam suatu program
+Implementasi pada program saya terdapat pada class User :
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, Notifiable;
+
+    private static $instance;
+
+    /**
+     * Get the singleton instance of User.
+     *
+     * @return User
+     */
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    // ... your other code ...
+
+    /**
+     * Prevent creating multiple instances of User.
+     */
+    private function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Prevent cloning the User instance.
+     */
+    private function __clone()
+    {
+    }
+}
+
+```
+pada code program di atas, saya menambahkan properti $instance yang merupakan instance tunggal dari class User. Metode getInstance() digunakan untuk mendapatkan instance tunggal tersebut. Jika instance belum ada, maka instance baru akan dibuat menggunakan constructor private.
+
+Konstruktor class User dibuat sebagai private untuk mencegah pembuatan multiple instances. Demikian pula, metode __clone() didefinisikan sebagai private agar instance User tidak dapat di-clone.
+
+## 5. 
+koneksi ke database pada framework laravel telah di kerjakan pada "config/database.php", untuk mengoneksikan nya ke database kita hanya perlu mengedit pada bagian .env seperti ini :
+```
+APP_NAME=brainly-api
+APP_ENV=local
+APP_KEY=base64:9GiXson6yy3p6deKl3Ga0yAt0lLmXikWMoQxyC09LvI=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=brainly-api
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+## 6. Mampu menunjukkan dan menjelaskan pembuatan web service dan setiap operasi CRUD nya 
+pada pembuatan web services ini saya menggunakan framework laravel untuk membuat restAPI, saya akan memberikan panduan singkat untuk menjelaskan implementasi web services menggunakan restAPI saya:
+1. route
+   Di Laravel, Anda dapat menggunakan metode get, post, put, dan delete untuk mendefinisikan rute untuk operasi CRUD (Create, Read, Update, Delete) yang umum digunakan dalam RESTful API, Berikut route yang saya buat sebagai endpoint :
+   ```
+      <?php
+   
+   
+   use Illuminate\Support\Facades\Route;
+   use App\Http\Controllers\QuestController;
+   use App\Http\Controllers\AnswerController;
+   use App\Http\Controllers\AuthenticationController;
+   
+   
+   Route::middleware(['auth:sanctum'])->group(function () {
+       route::get('/logout', [AuthenticationController::class, 'logout']);
+       route::get('/me', [AuthenticationController::class, 'me']);
+       route::post('/question', [QuestController::class, 'store']);
+       route::patch('/question/{id}', [QuestController::class, 'update'])->middleware('pemilik-pertanyaan');
+       route::delete('/question/{id}', [QuestController::class, 'destroy'])->middleware('pemilik-pertanyaan');
+   
+       route::post('/answer', [AnswerController::class, 'store']);
+       route::patch('/answer/{id}', [AnswerController::class, 'update'])->middleware('pemilik-jawaban');
+       route::delete('/answer/{id}', [AnswerController::class, 'destroy'])->middleware('pemilik-jawaban');
+   });
+   route::get('/question', [QuestController::class, 'index']);
+   route::get('/question/{id}', [QuestController::class, 'show']);
+   
+   
+   route::post('/login', [AuthenticationController::class, 'login']);
+
+   ```
+
+   routes ini disimpan pada class api.php
+3. controller
+   untuk mengelola logika bisnis dan pemrosesan data, Dalam metode-metode kontroler, Anda dapat mengambil data dari database, memvalidasi input, dan menghasilkan respon dalam format JSON
+   Berikut adalah salah satu class controller saya yaitu class QuestController untuk mengelola logika question:
+   ```
+   <?php
+   
+   namespace App\Http\Controllers;
+   
+   use App\Models\Quest;
+   use Illuminate\Http\Request;
+   use Illuminate\Support\Facades\Auth;
+   use App\Http\Resources\QuestResource;
+   use App\Http\Resources\QuestDetailResource;
+   
+   class QuestController extends Controller
+   {
+       public function index()
+       {
+           $quests = Quest::all();
+           return QuestDetailResource::collection($quests->loadMissing(['writer:id,name', 'answer:id,quest_id,user_id,is_answer']));
+       }
+   
+       public function show($id)
+       {
+           $quest = Quest::with('writer:id,name')->findOrFail($id);
+           return new QuestDetailResource($quest->loadMissing(['writer:id,name', 'answer:id,quest_id,user_id,is_answer']));
+       }
+   
+       public function store(Request $request)
+       {
+           $validated = $request->validate([
+                   'title' => 'required|max:255',
+                   'question' => 'required',
+               ]);
+   
+               $request['author'] = Auth::user()->id;
+               $quest = Quest::create($request->all());
+   
+               return new QuestDetailResource($quest->loadMissing('writer:id,name'));
+       }
+   
+       public function update(Request $request, $id)
+       {
+         
+           $validated = $request->validate([
+               'title' => 'required|max:255',
+               'question' => 'required',
+           ]);
+   
+           $quest = Quest::findOrFail($id);
+           $quest->update($request->all());
+   
+           return new QuestDetailResource($quest->loadMissing('writer:id,name'));
+       }
+   
+       public function destroy($id)
+       {
+           $quest = Quest::findOrFail($id);
+           $quest->delete();
+   
+           return new QuestDetailResource($quest->loadMissing('writer:id,name'));
+       }
+   }
+
+   ```
+5. middleware
+   middleware Laravel untuk menerapkan otorisasi, otentikasi, atau filter lainnya pada web services. Misalnya, menggunakan middleware auth:sanctum untuk mengamankan rute-rute tertentu dengan autentikasi Sanctum. contohnya bisa dilihat pada routes diatas ada beberapa routes yang memakai auth sanctum
+6. validasi
+   contoh implementasi validasi adalah untuk memvalidasi pengguna saat login
+   berikut adalah method untuk memvalidasi pengguna saat login
+   ```
+       public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|string',
+            'password' => 'required|string',
+        ]);  
+
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        return $user->createToken('login user')->plainTextToken;
+    }
+   ```
+7. pengujian
+   Pada pengujian tiaap end poind dan operasi CRUD saya menggunakan aplikasi postman.
+
+## 7. Mampu menunjukkan dan menjelaskan Graphical User Interface dari produk digital
+
+## 8. Mampu menunjukkan dan menjelaskan HTTP connection melalui GUI produk digital
+    GUI dengan menggunakan react typescript, untuk menghubungkan http requestnya akan menggunakan library pada typescript yaitu axios.
+## 9. Mampu Mendemonstrsikan produk digitalnya kepada publik dengan cara-cara kreatif melalui video Youtube
+
+## 10. Bonus: Mendemonstrasikan penggunaan Machine Learning pada produk yang digunakan
