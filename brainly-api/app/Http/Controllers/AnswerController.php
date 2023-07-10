@@ -43,6 +43,8 @@ class AnswerController extends Controller
         return new AnswerResource($answer-> loadMissing(['answerer:id,username']));
     }
 
+
+    //Polymorphism
     private function returnAnswerResource(Answer $answer)
     {
         $answer->loadMissing(['answerer:id,username']);
