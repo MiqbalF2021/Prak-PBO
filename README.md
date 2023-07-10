@@ -542,7 +542,7 @@ pada pembuatan web services ini saya menggunakan framework laravel untuk membuat
 ## 7. Mampu menunjukkan dan menjelaskan Graphical User Interface dari produk digital
 
 ## 8. Mampu menunjukkan dan menjelaskan HTTP connection melalui GUI produk digital
-    GUI dengan menggunakan react typescript, untuk menghubungkan http requestnya akan menggunakan library pada typescript yaitu axios.
+   GUI dengan menggunakan react typescript, untuk menghubungkan http requestnya akan menggunakan library pada typescript yaitu axios.
 ## 9. Mampu Mendemonstrsikan produk digitalnya kepada publik dengan cara-cara kreatif melalui video Youtube
 
 ## 10. Bonus: Mendemonstrasikan penggunaan Machine Learning pada produk yang digunakan
