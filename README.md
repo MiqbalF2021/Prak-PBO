@@ -32,9 +32,9 @@ Untuk menyimpan pertanyaan dan jawaban, saya menggunakan basis data relasional m
    - Untuk logout, saya ingin menyediakan tautan atau tombol "Logout" di halaman yang sesuai. Ketika pengguna mengklik tautan atau tombol "Logout", sesi login akan dihapus dan pengguna akan diarahkan kembali ke halaman login.
 
   untuk implementasi program nya dapat dilihat pada code program berikut :
-tampilkan, membuat,  edit dan hapus pertanyaan  :
-tampilkan, membuat,  edit dan hapus jawaban :
-Login & logout  : 
+tampilkan, membuat, edit dan hapus pertanyaan  : https://github.com/MiqbalF2021/Prak-PBO-BrainlyClone/blob/main/brainly-api/app/Http/Controllers/QuestController.php
+tampilkan, membuat, edit dan hapus jawaban : https://github.com/MiqbalF2021/Prak-PBO-BrainlyClone/blob/main/brainly-api/app/Http/Controllers/AnswerController.php
+Login & logout  : https://github.com/MiqbalF2021/Prak-PBO-BrainlyClone/blob/main/brainly-api/app/Http/Controllers/AuthenticationController.php
 
 ## 2. Mampu menjelaskan algoritma dari solusi yang dibuat
 Tentu! Berikut adalah penjelasan singkat tentang beberapa algoritma yang dapat digunakan dalam solusi yang telah dijelaskan sebelumnya:
@@ -71,11 +71,6 @@ Tentu! Berikut adalah penjelasan singkat tentang beberapa algoritma yang dapat d
      - Memverifikasi data masukan dengan data login yang valid dalam database.
      - Mengatur sesi login untuk pengguna yang berhasil login.
      - Menghapus sesi login untuk pengguna yang berhasil logout.
-
-untuk implementasi program nya dapat dilihat pada code program berikut :
-tampilkan, membuat,  edit dan hapus pertanyaan  :
-tampilkan, membuat,  edit dan hapus jawaban :
-Login & logout  : 
 
 ## 3. Mampu menjelaskan Konsep dasar OOP
 ### 1. Inheritance
