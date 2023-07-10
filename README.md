@@ -5,7 +5,6 @@
 
 # Jawaban Soal UTS
 ## 1. Mampu mendemonstrasikan penyelesaian masalah dengan pendekatan matematika dan algoritma pemrograman secara tepat
-Berikut adalah contoh pendekatan matematika dan algoritma pemrograman untuk mengimplementasikan fitur-fitur yang Anda sebutkan pada program website diskusi:
 
 1. Basis Data:
 Untuk menyimpan pertanyaan dan jawaban, saya menggunakan basis data relasional menggunakan SQL. Basis data ini akan memungkinkan kita untuk menyimpan dan mengelola data dengan efisien.
