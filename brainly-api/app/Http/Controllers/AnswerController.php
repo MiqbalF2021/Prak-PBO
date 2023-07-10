@@ -6,6 +6,8 @@ use App\Http\Resources\AnswerResource;
 use App\Models\Answer;
 use Illuminate\Http\Request;
 
+
+//inheritance
 class AnswerController extends Controller
 {
     public function store (Request $request)
