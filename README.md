@@ -37,7 +37,7 @@ tampilkan, membuat, edit dan hapus jawaban : https://github.com/MiqbalF2021/Prak
 Login & logout  : https://github.com/MiqbalF2021/Prak-PBO-BrainlyClone/blob/main/brainly-api/app/Http/Controllers/AuthenticationController.php
 
 ## 2. Mampu menjelaskan algoritma dari solusi yang dibuat
-Tentu! Berikut adalah penjelasan singkat tentang beberapa algoritma yang dapat digunakan dalam solusi yang telah dijelaskan sebelumnya:
+
 
 1. Algoritma menampilkan Pertanyaan dan Jawaban:
    - Algoritma ini melibatkan langkah-langkah berikut:
