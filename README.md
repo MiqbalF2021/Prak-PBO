@@ -532,6 +532,8 @@ pada pembuatan web services ini saya menggunakan framework laravel untuk membuat
    ```
 7. pengujian
    Pada pengujian tiaap end poind dan operasi CRUD saya menggunakan aplikasi postman.
+8. Operasi CRUD
+   Operasi CRUD pada program ini diantaranya Create pertanyaa, Create Jawaban, update pertanyaan, update jawaban, delete pertanyaan dan delete jawaban
 
 ## 7. Mampu menunjukkan dan menjelaskan Graphical User Interface dari produk digital
 
